@@ -1,3 +1,6 @@
+KEY_INDEX = 0
+VALUE_INDEX = 1
+
 class LinearProbingTable:
     def __init__(self, table_size=4):
         self.size = 0
