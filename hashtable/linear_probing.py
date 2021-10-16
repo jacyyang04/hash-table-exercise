@@ -8,6 +8,45 @@ class LinearProbingTable:
         for i in range(table_size):
             self.table.append(None)
 
+    def delete(self, key):
+        start_index = hash(key) % len(self.table)
+
+        while self.table[start_index] and self.table[start_index][KEY_INDEX] != key:
+            start_index = (start_index + 1) % len(self.table)
+
+        self.table[start_index] = None
+        #  Shift all following keys with the same hashcode up one
+        previous_index = start_index
+        start_index = (start_index + 1) % len(self.table)
+        
+
+        while self.table[start_index] and \
+            hash(key) % len(self.table) == hash(self.table[start_index]) % len(self.table):
+
+            self.table[previous_index] = self.table[start_index]
+            self.table[start_index] = None    
+            
+            previous_index = start_index
+            start_index = (start_index + 1) % len(self.table)
+    
+
+
+    def resize(self):
+        # Made a new Array twice the size
+        new_table = []
+        new_table_size = len(self.table) * 2
+        for i in range(new_table_size):
+            self.table.append(None)
+
+        # We made the new array be self.table
+        old_table = self.table
+        self.table = new_table
+
+        # re-inserted all the key-value pairs
+        for key, value in old_table:
+            self.insert(key, value)
+    
+
     def insert(self, key, value):
         """
         Insert `(key, value)` based on the hashed value of `key`.
