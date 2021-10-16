@@ -52,10 +52,30 @@ class LinearProbingTable:
         Insert `(key, value)` based on the hashed value of `key`.
         """
 
-        # TODO: Try to insert into self.table
+        # 1.  Find the index to insert the key, value pair
+        start_index = hash(key) % len(self.table)
+        # # 2.  Check to see if it's empty
+        # if self.table[start_index] is None:
+        #     # 2.a  If it is, insert and done!
+        #     self.table[start_index] = ( key, value )
+        # else:                        
+        #     # 2.b  If not change index to the next empty slot and repeat
+        #     while self.table[start_index] is not None:
+        #         start_index = (start_index + 1) % len(self.table)
+            
+        #     self.table[start_index] = ( key, value )
+
+
+        while self.table[start_index] is not None:
+            start_index = (start_index + 1) % len(self.table)
+        
+        self.table[start_index] = (key, value)
 
         # If successful, increment.
         self.size += 1
+
+        if self.size >= 0.75 * len(self.table):
+            self.resize()
 
     def get(self, key, default=None):
         """
