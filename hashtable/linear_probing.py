@@ -25,7 +25,7 @@ class LinearProbingTable:
 
             self.table[previous_index] = self.table[start_index]
             self.table[start_index] = None    
-            
+
             previous_index = start_index
             start_index = (start_index + 1) % len(self.table)
     
@@ -36,15 +36,18 @@ class LinearProbingTable:
         new_table = []
         new_table_size = len(self.table) * 2
         for i in range(new_table_size):
-            self.table.append(None)
+            new_table.append(None)
 
         # We made the new array be self.table
         old_table = self.table
         self.table = new_table
+        self.size = 0
 
         # re-inserted all the key-value pairs
-        for key, value in old_table:
-            self.insert(key, value)
+        for i in range(len(old_table)):
+            if old_table[i]:
+                key, value = old_table[i]
+                self.insert(key, value)
     
 
     def insert(self, key, value):
