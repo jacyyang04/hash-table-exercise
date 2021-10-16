@@ -9,8 +9,18 @@ class SeparateChainingTable:
         """
         Insert `(key, value)` based on the hashed value of `key`.
         """
+        index = hash(key) % len(self.table)
 
-        # TODO: Try to insert into self.table
+        # Bonus
+        for old_key, old_value in self.table[index]:
+            if old_key == key:
+                self.table[index].remove( (old_key, old_value ))
+        
+
+        # End-Bonus
+        self.table[index].append( (key, value) )
+
+        
 
         # If successful, increment.
         self.size += 1
