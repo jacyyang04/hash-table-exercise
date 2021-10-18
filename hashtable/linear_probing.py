@@ -5,6 +5,21 @@ class LinearProbingTable:
         for i in range(table_size):
             self.table.append(None)
 
+    def resize(self):
+        #make new array twice the size
+        new_table = []
+        new_table_size = len(self.table)*2
+        for i in range(new_table_size):
+            self.table.append(None)
+
+        #make new array table
+        old_table = self.table
+        self.table = new_table
+
+        #re-insert key, value pairs
+        for key, value in old_table:
+            self.insert(key, value)
+
     def insert(self, key, value):
         """
         Insert `(key, value)` based on the hashed value of `key`.
@@ -34,6 +49,9 @@ class LinearProbingTable:
 
         # If successful, increment.
         self.size += 1
+
+        if self.size >= 0.75*len(self.table):
+            self.resize()
 
     def get(self, key, default=None):
         """
