@@ -15,17 +15,22 @@ class LinearProbingTable:
         # find index to insert key-value pair
         start_index = hash(key) % len(self.table)
 
-        # check to see if empty
-        if self.table[start_index] is None:
-            # insert index with (key, value) as value
-            self.table[start_index] = (key, value)
-        # if not empty, change index to next empty spot and repeat
-        else:
-            while self.table[start_index] is not None:
-                start_index = (start_index+1) % len(self.table)
+        # # check to see if empty
+        # if self.table[start_index] is None:
+        #     # insert index with (key, value) as value
+        #     self.table[start_index] = (key, value)
+        # # if not empty, change index to next empty spot and repeat
+        # else:
+        #     while self.table[start_index] is not None:
+        #         start_index = (start_index+1) % len(self.table)
 
-            self.table[start_index] = (key, value)
+        #     self.table[start_index] = (key, value)
 
+
+        while self.table[start_index] is not None:
+            start_index = (start_index+1) % len(self.table)
+        
+        self.table[start_index] = (key, value)
 
         # If successful, increment.
         self.size += 1
