@@ -11,6 +11,14 @@ class SeparateChainingTable:
         """
 
         # TODO: Try to insert into self.table
+        index = hash(key) % len(self.table)
+
+        #bonus
+        for old_key, old_value in self.table[index]:
+            if old_key == key:
+                self.table[index].remove((old_key, old_value))
+
+        self.table[index].append((key, value))
 
         # If successful, increment.
         self.size += 1
